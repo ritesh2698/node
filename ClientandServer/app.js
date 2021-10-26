@@ -1,11 +1,33 @@
 const express = require('express');
-const { append } = require('vary');
+const morgan = require('morgan');
+const mongoose
+
 
 //express app
 const app = express()
 
+//connect to mongoDB
+const dbURL = 'mongodb+srv://ritesh:root@nodejs.w4kgb.mongodb.net/NodeJs?retryWrites=true&w=majority'
+
+
 //register view engine
 app.set('view engine', 'ejs')
+
+// app.use((req, res, next)=>{
+//     console.log('new request mode:');
+//     console.log('host:', req.hostname);
+//     console.log('path:', req.path);
+//     console.log('method:',req.method);
+//     next();
+// })
+
+//middleware and static files
+
+app.use(express.static('public'));
+
+// app.use(morgan('dev'));
+app.use(morgan('tiny'))
+
 
 app.get('/',(req,res)=>{
 
@@ -22,6 +44,11 @@ app.get('/',(req,res)=>{
     ]
     res.render('index',{title:'Home',blogs}); 
 })
+
+// app.use((req, res, next)=>{
+//     console.log("This is a next middleware")
+//     next();
+// })
 
 app.get('/about',(req,res)=>{
 
